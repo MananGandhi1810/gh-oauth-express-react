@@ -7,8 +7,8 @@ dotenv.config();
 const jwtSecret = process.env.SECRET_KEY;
 
 const prisma = new PrismaClient();
-const redis = createClient({ url: process.env.REDIS_URL });
-redis.connect();
+// const redis = createClient({ url: process.env.REDIS_URL });
+// redis.connect();
 
 const checkAuth = async (req, res, next) => {
     const { authorization } = req.headers;

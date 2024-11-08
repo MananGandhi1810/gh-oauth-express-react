@@ -6,8 +6,8 @@ import axios from "axios";
 dotenv.config();
 
 const prisma = new PrismaClient();
-const redis = createClient({ url: process.env.REDIS_URL });
-redis.connect();
+// const redis = createClient({ url: process.env.REDIS_URL });
+// redis.connect();
 
 const githubCallbackHandler = async (req, res) => {
     const { code } = req.query;
@@ -19,6 +19,7 @@ const githubCallbackHandler = async (req, res) => {
         },
     }).then((r) => r.data);
     const accessToken = response.access_token;
+    console.log(accessToken)
     const userData = await axios.get("https://api.github.com/user", {
         headers: {
             Authorization: "token " + accessToken,
@@ -39,7 +40,7 @@ const githubCallbackHandler = async (req, res) => {
         },
     );
     console.log(userData.data);
-    console.log(userEmailData.data.find((email) => email.primary));
+    console.log(userEmailData.data.find((email) => email.primary).email);
 
     res.redirect(`http://localhost:5173/`);
 };
